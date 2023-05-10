@@ -12,7 +12,7 @@ To install Tampermonkey, follow the instructions for your specific browser:
 - [Safari](https://www.tampermonkey.net/index.php?ext=dhdg&browser=safari)
 
 Once you have Tampermonkey installed, you can install VidSpeeder by following these steps:
-1. Click [here]() to view the VidAmplifier script.
+1. Click [here](https://greasyfork.org/es/scripts/465890-vidamplifier) to view the VidAmplifier script.
 2. Click the Install button at the top of the page.
 3. Tampermonkey will show you a confirmation page. Click the Install button to confirm.
 
