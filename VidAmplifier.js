@@ -2,7 +2,7 @@
 // @name         VidAmplifier
 // @namespace    https://github.com/DemianAdam/VidAmplifier
 // @version      0.1
-// @description VidAmplifier is a user script designed to enhance the audio of videos on YouTube beyond their default maximum volume.
+// @description  VidAmplifier is a user script designed to enhance the audio of videos on YouTube beyond their default maximum volume.
 // @author       Dnam
 // @match        https://www.youtube.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
