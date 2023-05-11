@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VidAmplifier
 // @namespace    https://github.com/DemianAdam/VidAmplifier
-// @version      0.2
+// @version      0.3
 // @description  VidAmplifier is a user script designed to enhance the audio of videos on YouTube beyond their default maximum volume.
 // @author       Dnam
 // @match        https://www.youtube.com/*
@@ -25,21 +25,25 @@
             gainNode.connect(audioCtx.destination);
             clearInterval(elementsReady);
             elementsReady = true;
+            console.log("elements");
+
         }
     },1000)
     /*document.addEventListener('yt-navigate-start', () => mainVolumeGain(gainNode));
     mainVolumeGain(gainNode);*/
     let ready = setInterval(()=> {
-        mainVolumeGain(gainNode,ready);
+        if(elementsReady){
+            mainVolumeGain(gainNode,ready);
+            console.log("source");
+        }
     },1000);
 })();
 
 function mainVolumeGain(gainNode,ready) {
-    if(document.querySelector("#videoVolumeSpan") || location.url == "https://www.youtube.com/" || !ready)
+    if(document.querySelector("#videoVolumeSpan") || location.url == "https://www.youtube.com")
     {
         return;
     }
-    clearInterval(ready);
     let gain = gainNode.gain.value;
     addVolumeSpan();
     addVolumeShorcutEvents();
@@ -117,4 +121,5 @@ function mainVolumeGain(gainNode,ready) {
         OnGainChanged.push(updateGainSpan);
         setInterval(() => gainChangedEvent(OnGainChanged), 250);
     }
+    clearInterval(ready);
 }
