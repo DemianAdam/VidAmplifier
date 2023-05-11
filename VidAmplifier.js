@@ -1,12 +1,11 @@
 // ==UserScript==
 // @name         VidAmplifier
 // @namespace    https://github.com/DemianAdam/VidAmplifier
-// @version      0.1
+// @version      0.2
 // @description  VidAmplifier is a user script designed to enhance the audio of videos on YouTube beyond their default maximum volume.
 // @author       Dnam
 // @match        https://www.youtube.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
-// @license      GPL-3.0-only
 // ==/UserScript==
 
 (function () {
@@ -14,19 +13,32 @@
     let audioCtx;
     let source;
     let gainNode;
-    let video = document.querySelector('video');
-    if (!source) {
-        audioCtx = new AudioContext();
-        source = audioCtx.createMediaElementSource(video);
-        gainNode = audioCtx.createGain();
-        source.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-    }
-    document.addEventListener('yt-navigate-start', () => mainVolumeGain(gainNode));
-    mainVolumeGain(gainNode);
+
+    let elementsReady = setInterval(()=>{
+        if (!source) {
+            let video = document.querySelector('video');
+            audioCtx = new AudioContext();
+            source = audioCtx.createMediaElementSource(video);
+            gainNode = audioCtx.createGain();
+            source.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            clearInterval(elementsReady);
+            elementsReady = true;
+        }
+    },1000)
+    /*document.addEventListener('yt-navigate-start', () => mainVolumeGain(gainNode));
+    mainVolumeGain(gainNode);*/
+    let ready = setInterval(()=> {
+        mainVolumeGain(gainNode,ready);
+    },1000);
 })();
 
-function mainVolumeGain(gainNode) {
+function mainVolumeGain(gainNode,ready) {
+    if(document.querySelector("#videoVolumeSpan") || location.url == "https://www.youtube.com/" || !ready)
+    {
+        return;
+    }
+    clearInterval(ready);
     let gain = gainNode.gain.value;
     addVolumeSpan();
     addVolumeShorcutEvents();
